@@ -1,49 +1,37 @@
 <template>
-    <div class="container" :class="background" @click.self="closeMenu">
-      <header class="header" :class="borderBottom">
-        <img :src="isDarkTheme ? menu_white.url : menu_black.url" class="menu" @click.stop="toggleMenu">
-        <div class="logo">
-          <img :src="isDarkTheme ? light.url : dark.url" alt="Ultan Logo">
-        </div>
-        <div class="actions">
-          <button @click="toggleTheme" class="buttonTheme" :class="buttonColor">{{ isDarkTheme ? 'Light' : 'Dark' }}</button>
-          <select v-model="currentLanguage" @change="changeLanguage">
-            <option value="kk">Қазақ</option>
-            <option value="ru">Русский</option>
-            <option value="en">English</option>
-          </select>
-        </div>
-      </header>
-        <div class="menu-slider" :class="{ active: isMenuOpen }" @click.stop>
-            <ul>
-            <li>
-                <button class="menu-slider-button">Аяқ киімдер</button>
-                <img class="menu-slider-right" src="./icons/angle-right.svg">
-            </li>
-            <li>
-                <button class="menu-slider-button">Аксессуарлар</button>
-                <img class="menu-slider-right" src="./icons/angle-right.svg">
-            </li>
-            <li>
-                <button class="menu-slider-button">Біз жайлы</button>
-                <img class="menu-slider-right" src="./icons/angle-right.svg">
-            </li>
-            <li>
-                <button class="menu-slider-button">Сату</button>
-                <img class="menu-slider-right" src="./icons/angle-right.svg">
-            </li>
-            </ul>
-        </div>
-        <div class="overlay" v-if="isMenuOpen" @click="closeMenu"></div>
+  <div class="container" :class="background" @click.self="closeMenu">
+    <header class="header" :class="borderBottom">
+      <img :src="isDarkTheme ? menu_white.url : menu_black.url" class="menu" @click.stop="toggleMenu">
+      <div class="logo">
+        <img :src="isDarkTheme ? light.url : dark.url" alt="Ultan Logo">
+      </div>
+      <div class="actions">
+        <Toggle @eventname="updateparent"></Toggle>
+        <select v-model="currentLanguage" @change="changeLanguage" class="language-select">
+          <option value="kk">Қазақ</option>zzz
+          <option value="ru">Русский</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+    </header>
+    <div class="menu-slider" :class="{ active: isMenuOpen }" @click.stop>
+        <ul>
+            <li><button class="menu-slider-button">Аяқ киімдер <img class="menu-slider-right" src="./icons/angle-right.svg"></button></li>
+            <li><button class="menu-slider-button">Аксессуарлар <img class="menu-slider-right" src="./icons/angle-right.svg"></button></li>
+            <li><button class="menu-slider-button">Біз жайлы <img class="menu-slider-right" src="./icons/angle-right.svg"></button></li>
+            <li><button class="menu-slider-button">Сату <img class="menu-slider-right" src="./icons/angle-right.svg"></button></li>
+        </ul>
     </div>
-</template>  
-  
+    <div class="overlay" v-if="isMenuOpen" @click="closeMenu"></div>
+  </div>
+</template>
 
 <script>
 import Logo_dark from './assets/logo/dark.png';
 import Logo_light from './assets/logo/light.png';
 import Menu_black from './icons/menu-burger-black.svg';
 import Menu_white from './icons/menu-burger-white.svg';
+import Toggle from './Toggle.vue';
 
 export default {
   data() {
@@ -89,11 +77,16 @@ export default {
     },
     changeLanguage(event) {
       this.$i18n.locale = event.target.value;
+    },
+    updateparent(variable) {
+      this.isDarkTheme = variable;
     }
+  },
+  components: {
+    Toggle
   }
 };
 </script>
-
 
 <style scoped>
 .header {
@@ -101,7 +94,8 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 20px 20px;
-  /* position: sticky; */
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
@@ -134,6 +128,29 @@ export default {
   margin-left: 15px;
 }
 
+.language-select {
+  border: none;
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  background-color: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.language-select:focus {
+  outline: none;
+}
+
+.language-select option {
+  background-color: inherit;
+  color: inherit;
+}
+
+.language-select option:checked {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
 .buttonTheme {
   border: none;
   background: none;
@@ -143,6 +160,7 @@ export default {
 .black {
   color: black;
 }
+
 .white {
   color: white;
 }
@@ -150,6 +168,7 @@ export default {
 .black_bottom {
   border-bottom: 1px black solid;
 }
+
 .white_bottom {
   border-bottom: 1px white solid;
 }
@@ -170,6 +189,7 @@ export default {
   transition: left 0.3s ease;
   padding-top: 60px;
   z-index: 1000;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .menu-slider.active {
@@ -182,15 +202,13 @@ export default {
 }
 
 .menu-slider ul li {
-  padding: 10px 30px 10px 10px;
-  display: flex;
-  justify-content: space-between;
+  padding: 10px;
   text-align: center;
 }
 
 .menu-slider-button{
     display: flex;
-    padding: 0px 25px;
+    padding: 8px 25px;
     font-size: 15px;
     color: white;
     background: none;
@@ -209,30 +227,17 @@ export default {
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
-
-.slide-enter-active, .slide-leave-active {
-  transition: transform 0.3s ease;
-}
-
-.slide-enter, .slide-leave-to {
-  transform: translateX(-100%);
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
 </style>
 
 <style>
 /* Theme */
 .dark {
   background-color: #35231a;
+  color: #f5f0e0;
 }
+
 .light {
   background-color: #f5f0e0;
+  color: #35231a;
 }
 </style>
