@@ -14,13 +14,14 @@
           </select>
         </div>
       </header>
-      <div class="menu-slider" :class="{ active: isMenuOpen }" @click.stop>
-        <ul>
-          <li><a href="#sales">Sales</a></li>
-          <li><a href="#bags">Bags</a></li>
-          <li><a href="#shoes">Shoes</a></li>
-        </ul>
-      </div>
+        <div class="menu-slider" :class="{ active: isMenuOpen }" @click.stop>
+            <ul>
+            <li><a href="#sales">Аяқ киімдер</a></li>
+            <li><a href="#bags">Аксессуарлар</a></li>
+            <li><a href="#shoes"></a></li>
+            </ul>
+        </div>
+        <div class="overlay" v-if="isMenuOpen" @click="closeMenu"></div>
     </div>
 </template>  
   
@@ -175,6 +176,32 @@ export default {
 .menu-slider ul li a {
   color: white;
   text-decoration: none;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.slide-enter-active, .slide-leave-active {
+  transition: transform 0.3s ease;
+}
+
+.slide-enter, .slide-leave-to {
+  transform: translateX(-100%);
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>
 
