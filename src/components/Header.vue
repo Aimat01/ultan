@@ -16,9 +16,22 @@
       </header>
         <div class="menu-slider" :class="{ active: isMenuOpen }" @click.stop>
             <ul>
-            <li><a href="#sales">Аяқ киімдер</a></li>
-            <li><a href="#bags">Аксессуарлар</a></li>
-            <li><a href="#shoes"></a></li>
+            <li>
+                <button class="menu-slider-button">Аяқ киімдер</button>
+                <img class="menu-slider-right" src="./icons/angle-right.svg">
+            </li>
+            <li>
+                <button class="menu-slider-button">Аксессуарлар</button>
+                <img class="menu-slider-right" src="./icons/angle-right.svg">
+            </li>
+            <li>
+                <button class="menu-slider-button">Біз жайлы</button>
+                <img class="menu-slider-right" src="./icons/angle-right.svg">
+            </li>
+            <li>
+                <button class="menu-slider-button">Сату</button>
+                <img class="menu-slider-right" src="./icons/angle-right.svg">
+            </li>
             </ul>
         </div>
         <div class="overlay" v-if="isMenuOpen" @click="closeMenu"></div>
@@ -169,13 +182,22 @@ export default {
 }
 
 .menu-slider ul li {
-  padding: 10px;
+  padding: 10px 30px 10px 10px;
+  display: flex;
+  justify-content: space-between;
   text-align: center;
 }
 
-.menu-slider ul li a {
-  color: white;
-  text-decoration: none;
+.menu-slider-button{
+    display: flex;
+    padding: 0px 25px;
+    font-size: 15px;
+    color: white;
+    background: none;
+    border: none;
+}
+.menu-slider-right{
+    height: 15px;
 }
 
 .overlay {

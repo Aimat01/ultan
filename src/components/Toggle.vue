@@ -1,7 +1,7 @@
 <template>
     <div class="containerToggles" :class = "background">
         <label class="switch">
-            <input type="checkBox" v-model="isChecked" @change="toggleSwitch">
+            <input type="checkBox"  @change="toggleSwitch">
             <span class="slider"></span>
         </label>
     </div>
@@ -16,6 +16,8 @@ export default {
     },
     methods: {
         toggleSwitch() {
+            this.isChecked = !this.isChecked 
+            this.$emit('eventname', this.isChecked)
         }
     }
 }
