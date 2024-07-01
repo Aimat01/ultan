@@ -14,6 +14,29 @@ import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faUserSecret)
 
+import { createMemoryHistory, createRouter } from 'vue-router'
+
+import MainPage from './components/MainPage.vue'
+import Shoes from './components/Shoes.vue'
+import Masi from './components/Masi.vue'
+import Kross from './components/Kross.vue'
+
+const routes = [
+  { path: '/', component: MainPage },
+  { path: '/shoes', component: Shoes },
+  { path: '/masi', component: Masi }, 
+  { path: '/kross', component: Kross }
+
+]
+
+const router = createRouter({
+  history: createMemoryHistory(),
+  routes,
+})
+
 createApp(App)
+    .use(router)
     .component('font-awesome-icon', FontAwesomeIcon)
     .mount('#app')
+
+    
